@@ -1,0 +1,582 @@
+-- Natural Numbers
+-- declare
+-- n int default 5;
+-- begin
+--     for i in 1 .. n loop
+--         dbms_output.put_line(i);
+--     end loop;
+-- end;
+
+
+-- Natural Numbers using function
+-- create or replace
+-- function natur(n in int)
+-- return int
+-- is
+-- i int;
+-- begin
+--     for i in 1..n loop
+--         dbms_output.put_line(i);
+--     end loop;
+--     return i;
+-- end;
+-- declare 
+-- i int;
+-- begin
+--     i:=natur(5);
+-- end;
+
+
+-- create or replace function fn
+-- return int
+-- is
+-- i int;
+-- j int default 1;
+-- begin
+-- dbms_output.put_line('Hello');
+-- return j;
+-- end;
+-- declare 
+-- i int;
+-- begin
+-- i:=fn;
+-- end;
+
+
+
+-- create table emp(id int, name varchar(255), sal float, age int);
+-- insert into emp values(101, 'John', 10101.00, 21);
+-- insert into emp values(102, 'Mary', 102102.00, 22);
+-- insert into emp values(103, 'Cory', 103103.00, 21);
+-- insert into emp values(104, 'Adam', 104104.00, 25);
+
+
+-- select * from emp;
+
+-- Procedure
+-- create or replace procedure avgsal(i int)
+-- is
+-- o emp.sal%type;
+-- begin
+--     select avg(sal) into o from emp;
+--     dbms_output.put_line(o);
+-- end;
+
+-- begin
+-- avgsal(2);
+-- end;
+
+
+
+-- Implicit Cursor: SQL%FOUND, SQL%NOTFOUND, SQL%ROWCOUNT
+    -- create or replace procedure impcur(val in int)
+    -- is
+    -- rc int;
+    -- begin
+    --     update emp set sal=val;
+        
+    --     if SQL%FOUND then
+    --         rc := SQL%ROWCOUNT;
+    --         dbms_output.put_line(rc);
+    --     else
+    --         dbms_output.put_line('NO');
+    --     end if;
+    -- end;
+    
+    -- begin
+    -- impcur(1);
+    -- end;
+    -- select * from emp;
+    
+
+-- Explicit Cursor: cursor%ROWTYPE
+    -- declare 
+    -- cursor c1 is select name, age from emp where age>21;
+    -- outp c1%rowtype;
+    -- begin
+    --     for outp in c1 loop
+    --         dbms_output.put_line('Name: '||outp.name||' Age: '||outp.age);
+    --     end loop;
+    -- end;
+    
+
+-- System Designed Exception and Handling
+-- declare 
+-- a int default 1;
+-- b int default 0;
+-- c int;
+-- begin
+--     c:=a/b;
+--     dbms_output.put_line(c);
+-- exception
+-- when others then
+-- dbms_output.put_line('Handled');
+-- end;
+
+
+-- User Defined Exceptions
+-- create or replace function divi(a in int, b in int)
+-- return float
+-- as
+--     c int;
+--     div exception;
+-- begin
+--     if b=0 then
+--         raise div;
+--     else
+--         c:=a/b;
+--         dbms_output.put_line(c); 
+--         return c;
+--     end if;
+-- exception
+--     when div then
+--         dbms_output.put_line('divide by zero'); 
+--         return 1;
+-- end;
+
+-- declare 
+--     i float;
+-- begin
+--     i:=divi(1,0);
+-- end;
+
+
+
+-- Trigger: name availabilty
+-- create or replace trigger namecheck
+-- before insert 
+-- on emp 
+-- for each row
+-- declare
+--     rc int default 0;
+-- begin
+--     select count(*) into rc from emp where name = :NEW.name;
+--     if rc<>0then
+--         raise_application_error(-20001, 'Name Found');
+--     end if;
+-- end;
+-- insert into emp values(105, 'Mark', 105105, 20);
+
+
+-- Trigger after delete
+-- select * from emp;
+
+
+
+
+
+
+
+
+-- -- declare 
+-- -- n int;
+-- -- n1 int;
+-- -- n2 int;
+-- -- begin
+-- --     n1:=0;
+-- --     n2:=1;
+-- --  for i in 0 .. 5 loop
+-- --     dbms_output.put_line(n1);
+-- --     n:= n1+n2;
+-- --     n1:=n2;
+-- --     n2:=n;
+-- --     end loop;
+-- -- end;
+
+-- -- create table emp(id int, name varchar(255), sal int, age int);
+-- -- insert into emp values(101, 'John', 101, 21);
+-- -- insert into emp values(102, 'Mary', 102, 22);
+-- -- insert into emp values(103, 'Cory', 103, 21);
+-- -- insert into emp values(104, 'Adam', 104, 25);
+
+-- -- select * from emp;
+
+-- declare
+-- a int;
+-- b int;
+-- c int;
+-- divide exception;
+-- begin
+-- a:=1;
+-- b:=0;
+-- if a=1 and b=0 then
+-- raise divide;
+
+-- else
+-- c := a/b;
+
+-- end if;
+
+-- exception
+-- when divide then
+-- dbms_output.put_line('Divide');
+-- end;
+
+-- declare 
+-- cursor c1 
+-- is
+-- select * from emp where age>21;
+-- det c1%rowtype;
+-- begin
+--     for det in c1 loop
+--         dbms_output.put_line(det.name||det.age);
+--     end loop;
+-- end;
+
+
+-- declare 
+-- a int default 1;
+-- b int default 0;
+-- c int;
+-- begin
+-- c:=a/b;
+-- exception 
+-- when ZERO_DIVIDE then
+--     dbms_output.put_line('Handled');
+-- end;
+
+
+-- declare
+-- a int default 1;
+-- b int default 0;
+-- c int;
+-- divide exception;
+-- begin
+-- if a=1 and b=0 then
+--     raise divide;
+-- else
+--     dbms_output.put_line('OK');
+-- end if;
+-- exception
+-- when divide then
+--     dbms_output.put_line('Divide by Zero');
+-- end;
+
+-- set serveroutput on@;
+
+
+-- declare 
+-- a int;
+-- b int;
+-- c int;
+-- begin
+-- a:=1;
+-- b:=0;
+-- c:=a/b;
+-- end;
+
+
+-- alter table emp add constraint pkey PRIMARY KEY(id);
+
+-- desc emp;
+
+
+-- create table stu(name varchar(255) PRIMARY KEY,sal int);
+-- insert into stu(sal, name) values(101, 'Wolfe');
+-- insert into stu(sal, name) values(102, 'Jane');
+-- insert into stu(sal, name) values(103, 'Kenshin');
+-- insert into stu(sal, name) values(104, 'Sandler');
+-- alter table stu add constraint pkey PRIMARY KEY(sal);
+
+-- drop table stu;
+alter table emp add constraint fkey FOREIGN KEY(sal) references stu(sal);
+
+-- create table emp(id int, name varchar(255), sal float, age int);
+-- insert into emp values(101, 'John', 10101.00, 21);
+-- insert into emp values(102, 'Mary', 102102.00, 22);
+-- insert into emp values(103, 'Cory', 103103.00, 21);
+-- insert into emp values(104, 'Adam', 104104.00, 25);
+
+
+-- create or replace procedure getdet(a int)
+-- is
+-- cursor c1(ag int) is select * from emp where age>ag;
+-- rc c1%rowtype;
+-- begin
+-- for rc in c1(a) loop
+-- dbms_output.put_line(rc.age);
+-- end loop;
+-- end;
+
+-- begin
+-- getdet(21);
+-- end;
+
+
+
+-- select * from emp;
+
+-- create or replace function getage(n varchar)
+-- return int
+-- is 
+-- o int;
+-- begin
+-- select age into o from emp where name=n;
+-- return o;
+-- end;
+
+-- declare 
+-- age int;
+-- begin
+-- age:=getage('John');
+-- dbms_output.put_line(age);
+-- end;
+
+
+-- declare
+-- div exception;
+-- begin
+-- raise div;
+-- exception
+-- when div then
+-- dbms_output.put_line('Error');
+-- end;
+
+-- select * from emp;
+
+-- create trigger chk
+-- before insert
+-- on emp
+-- for each row
+-- declare
+-- rc int;
+-- begin
+-- select count(*) into rc from emp where id= :new.id;
+-- if rc<>0 then
+-- raise_application_error(-20001, 'Already Exists');
+-- end if;
+-- end;
+
+-- insert into emp values(101, '101', 101, 101);
+
+-- create trigger diff
+-- before update
+-- on emp
+-- for each row
+-- declare 
+-- saldiff int;
+-- begin
+-- saldiff:=:new.sal-:old.sal;
+-- dbms_output.put_line(saldiff);
+-- end;
+
+-- update emp set sal=10000 where name='John';
+
+-- create or replace trigger del
+-- after delete
+-- on emp
+-- for each row
+-- declare 
+-- en varchar(255);
+-- begin
+-- en:='Mary';
+-- delete from emp where name=en;
+-- end;
+
+-- select * from emp;
+-- select * from dept;
+
+-- create table dept(id int, loc varchar(255));
+-- insert into dept values(101, 'Del');
+-- insert into dept values(102, 'Lko');
+-- insert into dept values(103, 'Mum');
+-- insert into dept values(104, 'Ban');
+
+-- delete from emp where name='John';
+
+-- select * from emp;
+-- select * from dept;
+
+-- select * from dept minus select * from dept;
+
+-- select * from emp;
+-- select * from dept;
+
+-- create trigger go
+-- after delete
+-- on dept
+-- for each row
+-- declare
+-- w dept.id%type;
+-- begin
+-- w:= :old.id;
+-- delete from emp where id=w;
+-- end;
+
+-- delete from dept where loc='Del';
+
+-- select * from dept;
+-- select * from emp;
+
+-- drop trigger go;
+
+
+-- create table emp(id int, name varchar(255), sal float, age int);
+-- insert into emp values(101, 'John', 10101.00, 21);
+-- insert into emp values(102, 'Mary', 102102.00, 22);
+-- insert into emp values(103, 'Cory', 103103.00, 21);
+-- insert into emp values(104, 'Adam', 104104.00, 25);
+
+
+-- create or replace procedure getdet(a int)
+-- is
+-- cursor c1(ag int) is select * from emp where age>ag;
+-- rc c1%rowtype;
+-- begin
+-- for rc in c1(a) loop
+-- dbms_output.put_line(rc.age);
+-- end loop;
+-- end;
+
+-- begin
+-- getdet(21);
+-- end;
+
+
+
+-- select * from emp;
+
+-- create or replace function getage(n varchar)
+-- return int
+-- is 
+-- o int;
+-- begin
+-- select age into o from emp where name=n;
+-- return o;
+-- end;
+
+-- declare 
+-- age int;
+-- begin
+-- age:=getage('John');
+-- dbms_output.put_line(age);
+-- end;
+
+
+-- declare
+-- div exception;
+-- begin
+-- raise div;
+-- exception
+-- when div then
+-- dbms_output.put_line('Error');
+-- end;
+
+-- select * from emp;
+
+-- create trigger chk
+-- before insert
+-- on emp
+-- for each row
+-- declare
+-- rc int;
+-- begin
+-- select count(*) into rc from emp where id= :new.id;
+-- if rc<>0 then
+-- raise_application_error(-20001, 'Already Exists');
+-- end if;
+-- end;
+
+-- insert into emp values(101, '101', 101, 101);
+
+-- create trigger diff
+-- before update
+-- on emp
+-- for each row
+-- declare 
+-- saldiff int;
+-- begin
+-- saldiff:=:new.sal-:old.sal;
+-- dbms_output.put_line(saldiff);
+-- end;
+
+-- update emp set sal=10000 where name='John';
+
+-- create or replace trigger del
+-- after delete
+-- on emp
+-- for each row
+-- declare 
+-- en varchar(255);
+-- begin
+-- en:='Mary';
+-- delete from emp where name=en;
+-- end;
+
+-- select * from emp;
+-- select * from dept;
+
+-- create table dept(id int, loc varchar(255));
+-- insert into dept values(101, 'Del');
+-- insert into dept values(102, 'Lko');
+-- insert into dept values(103, 'Mum');
+-- insert into dept values(104, 'Ban');
+
+-- delete from emp where name='John';
+
+-- select * from emp;
+-- select * from dept;
+
+-- select * from dept minus select * from dept;
+
+-- select * from emp;
+-- select * from dept;
+
+-- create trigger go
+-- after delete
+-- on dept
+-- for each row
+-- declare
+-- w dept.id%type;
+-- begin
+-- w:= :old.id;
+-- delete from emp where id=w;
+-- end;
+
+-- delete from dept where loc='Del';
+
+-- select * from dept;
+-- select * from emp;
+
+-- drop trigger go;
+
+-- insert into emp values(101, 'John', 10000, 21);
+-- insert into dept values(101, 'Del');
+
+-- alter table emp add constraint f_key foreign key(id) references dept(id);
+
+-- alter table dept add constraint p_key PRIMARY KEY(id);
+
+-- desc emp;
+
+-- create table emp1(id int PRIMARY KEY, name varchar(255), sal float, age int, FOREIGN KEY(name) references dept1(name));
+-- insert into emp1 values(101, 'John', 10101.00, 21);
+-- insert into emp1 values(102, 'Mary', 102102.00, 22);
+-- insert into emp1 values(103, 'Cory', 103103.00, 21);
+-- insert into emp1 values(104, 'Adam', 104104.00, 25);
+
+-- select * from emp1;
+
+-- create table dept1(id int PRIMARY KEY, name varchar(255) unique, loc varchar(255));
+-- insert into dept1 values(101, 'John', 'Del');
+-- insert into dept1 values(102, 'Mary','Lko');
+-- insert into dept1 values(103, 'Cory', 'Mum');
+-- insert into dept1 values(104, 'Adam','Ban');
+
+-- drop table emp1;
+-- drop table dept1;
+
+-- select * from  emp1;
+-- select * from dept1;
+
+-- drop table emp1;
+-- create table emp1(id int PRIMARY KEY, name varchar(255), sal float, age int, constraint chk check (age>20));
+-- insert into emp1 values(101, 'John', 10101.00, 21);
+-- insert into emp1 values(102, 'Mary', 102102.00, 22);
+-- insert into emp1 values(103, 'Cory', 103103.00, 21);
+-- insert into emp1 values(104, 'Adam', 104104.00, 25);
+
+-- select * from emp1;
+-- drop table emp1;
+
+-- insert into emp1 values(105, 'Mark', 105105.00, 18);
